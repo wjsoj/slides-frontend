@@ -2,13 +2,17 @@
 import { ref } from 'vue'
 import { StyleProvider, Themes } from '@varlet/ui'
 
-const active = ref(0)
 const floating = ref(false)
 
-let currentTheme = Themes.dark
+const whiteTheme = {
+  '--color-primary': 'teal'
+}
+
+let currentTheme = whiteTheme
+StyleProvider(currentTheme)
 
 function toggleTheme() {
-  currentTheme = currentTheme ? null : Themes.dark
+  currentTheme = currentTheme==Themes.dark ? whiteTheme : Themes.dark
   StyleProvider(currentTheme)
 }
 
@@ -25,14 +29,16 @@ function jump(url,isnew) {
 
 <template>
   <div class="barbar">
-    <var-app-bar round >
-      My Slides
-      <template #right>
-        <var-button round text color="transparent" text-color="#fff" @click="toggleTheme">
-          Switch Theme
-        </var-button>
-      </template>
-    </var-app-bar>
+    <var-sticky>
+      <var-app-bar>
+        My Slides
+        <template #right>
+          <var-button round text color="transparent" text-color="#fff" @click="toggleTheme">
+            Switch Theme
+          </var-button>
+        </template>
+      </var-app-bar>
+    </var-sticky>
   </div>
 
   <div class="cardlist">
@@ -79,9 +85,10 @@ function jump(url,isnew) {
 
 <style>
 .barbar {
-  /* width: 100vw; */
-  align-self: center;
-  margin-top: -8px;
+  width: 100vw;
+  margin-left: -8px;
+  /* margin-right: -10px; */
+  margin-top: -10px;
 }
 
 .card-example-text {
